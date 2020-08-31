@@ -32,12 +32,17 @@ std::vector<NEAT::Test> GetDataFromCSV(std::string filename) {
         string line, val;
         while(getline(csv, line))
         {
-                vector<string> data = split(line, ",");
-
-                vector<real_t> in = {{stof(data[0]), stof(data[1])}};
-                vector<real_t> out = {stof(data[2])};
+                vector<string> data = split(line, ":");
+            
+                vector<string> in_s = split(data.at(0), ",");
+                vector<real_t> in;
+                std::transform( in_s.begin(), in_s.end(), in.begin(), stof);
+            
+                vector<string> out_s = split(data.at(1), ",");
+                vector<real_t> out;
+                std::transform( out_s.begin(), out_s.end(), out.begin(), stof);
+            
                 Step step(in, out, 1.0f); //extract weight if needed
-
                 result.push_back(step); 
         }
         
